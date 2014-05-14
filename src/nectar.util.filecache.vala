@@ -1,21 +1,21 @@
-using Nectar;
+class Nectar.Util.FileCache : Object {
+	private string _bucket;
+	private string _dir;
+	private string filename_for_key (string key) {
+		string hash = Checksum.compute_for_string(ChecksumType.MD5, key);
+		return Path.build_filename(this._dir, hash);
+	}
 
-class Nectar.Util.FileCache : GObject {
-	private static string filename_for_key (string key, string? suffix) {
-		string cache_base = GLib.Environment.get_user_cache_dir();
-		string hash = GLib.Checksum.compute_for_string(GLib.ChecksumType.MD5, key);
+	public FileCache (string? bucket) {
+		this._bucket = bucket ?? "default";
+		this._dir = Path.build_filename(Environment.get_user_cache_dir(), "nectar", this._bucket);
+		DirUtils.create_with_parents(this._dir, 0700);
+	}
 
-		return GLib.Path.build_filename(cache_base, "nectar", hash + (suffix ? suffix : ""));
+	public File lookup (string key) {
+		return File.new_for_path(filename_for_key(key));
 	}
-	public static void setup () {
-		string path = GLib.Path.build_filename(GLib.Environment.get_user_cache_dir(), "nectar");
-		GLib.File file = new GLib.File.new_for_path(path);
-		file.make_directory_with_parents();
-	}
-	public static GLib.File lookup (string key, string? suffix) {
-		return GLib.File.new_for_path(filename_for_key(key, suffix));
-	}
-	public static string[] clean (GLib.DateTime older_than) {
+	public string[] clean (DateTime older_than) {
 		// to be implemented
 		return {""};
 	}
