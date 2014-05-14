@@ -1,20 +1,37 @@
-### BOILERPLATE ###
-cmake_minimum_required ( VERSION 2.8 )
-list ( APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake )
-set ( CMAKE_INCLUDE_CURRENT_DIR ON )
-set ( CMAKE_COLOR_MAKEFILE ON )
+cmake_minimum_required (VERSION 2.8)
+cmake_policy (VERSION 2.8)
+project (nectar)
+enable_testing ()
 
-string ( COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" insource )
-if ( insource )
-	message ( FATAL_ERROR "Nectar requires an out-of-source build." )
-endif ( insource )
 
-### PROJECT INFO ###
-project ( Undesktop-AskPass C )
-set ( VERSION "0.1.0" )
-set ( COPYRIGHT "Copyright 2014 Peter Lejeck" )
-set ( DESCRIPTION "GTK3 client for Hummingbird.me" )
-set ( WEBSITE "http://nuckchorris.github.io/nectar/" )
+# Project info
+set (APP_NAME "Nectar")
+set (VERSION "0.1.0")
+set (VERSION_INFO "Prerelease")
+set (COPYRIGHT "Copyright 2014 Peter Lejeck")
+set (DESCRIPTION "GTK3 Client for hummingbird.me")
+set (RELEASE_NAME "${DESCRIPTION}")
+set (WEBSITE "http://nuckchorris.github.io/nectar/")
+
+
+# base bits
+include (GNUInstallDirs)
+set (DATADIR "${CMAKE_INSTALL_FULL_DATAROOTDIR}")
+set (PKGDATADIR "${DATADIR}/${CMAKE_PROJECT_NAME}")
+set (GETTEXT_PACKAGE "${CMAKE_PROJECT_NAME}")
+
+list (APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+add_definitions ("-DGETTEXT_PACKAGE=\"${GETTEXT_PACKAGE}\"")
+
+
+# niceties
+set (CPACK_PACKAGE_VERSION "${VERSION}")
+set (CPACK_SOURCE_GENERATOR "TGZ")
+set (CPACK_SOURCE_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}-${CPACK_PACKAGE_VERSION}")
+set (CPACK_SOURCE_IGNORE_FILES "/build/;/.git/;/.gitignore/~$;${CPACK_SOURCE_IGNORE_FILES}")
+
+include (CPack)
+add_custom_target (dist COMMAND "$CMAKE_MAKE_PROGRAM} package_source")
 
 
 ### PKGCONFIG ###
@@ -41,6 +58,7 @@ ensure_vala_version ( "0.20" MINIMUM )
 include ( ValaPrecompile )
 vala_precompile (
 VALA_C nectar
+	src/nectar.util.filecache.vala
 	src/nectar.widget.webimage.vala
 	src/nectar.widget.nowplaying.vala
 	src/nectar.vala
