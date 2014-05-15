@@ -58,6 +58,7 @@ ensure_vala_version ( "0.20" MINIMUM )
 include ( ValaPrecompile )
 vala_precompile (
 VALA_C nectar
+	src/nectar.model.animeseries.vala
 	src/nectar.util.filecache.vala
 	src/nectar.widget.webimage.vala
 	src/nectar.widget.nowplaying.vala
