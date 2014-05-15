@@ -17,8 +17,13 @@ int main (string[] args) {
 	session.add_feature(cache);
 
 	try {
-		var img = new Nectar.Widget.WebImage("http://static.hummingbird.me/anime/poster_images/000/005/853/large/5853.jpg?1383496800", session);
-		window.add (img);
+		var series = new Nectar.Model.AnimeSeries();
+		series.title = "Puella Magi Madoka Magica";
+		series.episode_count = 17;
+		series.cover_image = "http://static.hummingbird.me/anime/poster_images/000/005/853/large/5853.jpg?1383496800";
+
+		var nowplaying = new Nectar.Widget.NowPlaying.with_anime_series(series);
+		window.add (nowplaying);
 	} catch (Error e) {
 		stderr.printf("%s\n", e.message);
 	}
