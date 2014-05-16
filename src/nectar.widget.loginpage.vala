@@ -26,6 +26,12 @@ class Nectar.Widget.LoginPage : Gtk.Box {
 		this._login_button.clicked.connect(() => {
 			login();
 		});
+		this._username_entry.activate.connect(() => {
+			this._login_button.clicked();
+		});
+		this._password_entry.activate.connect(() => {
+			this._login_button.clicked();
+		});
 	}
 	public LoginPage.with_username (string username) {
 		this();
