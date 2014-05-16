@@ -1,4 +1,4 @@
-struct Nectar.Model.AnimeSeries {
+public struct Nectar.Model.AnimeSeries {
 	string slug;
 	string status;
 	string url;
