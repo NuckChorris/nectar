@@ -16,14 +16,21 @@ int main (string[] args) {
 	var cache = new Soup.Cache(Path.build_filename(Environment.get_user_cache_dir(), "nectar", "_soup"), Soup.CacheType.SINGLE_USER);
 	session.add_feature(cache);
 
-	try {
-		var series = new Nectar.Model.AnimeSeries();
-		series.title = "Puella Magi Madoka Magica";
-		series.episode_count = 17;
-		series.cover_image = "http://static.hummingbird.me/anime/poster_images/000/005/853/large/5853.jpg?1383496800";
+	var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
+	window.add(box);
 
+	var series = Nectar.Model.AnimeSeries();
+	series.title = "Puella Magi Madoka Magica";
+	series.episode_count = 17;
+	series.cover_image = "http://static.hummingbird.me/anime/poster_images/000/005/853/large/5853.jpg?1383496800";
+
+	try {
 		var nowplaying = new Nectar.Widget.NowPlaying.with_anime_series(series);
-		window.add (nowplaying);
+		box.pack_start(nowplaying);
+		var bar = new Gtk.HeaderBar();
+		box.pack_end(bar);
+		var btn = new Gtk.Button.with_label("penis");
+		bar.pack_start(btn);
 	} catch (Error e) {
 		stderr.printf("%s\n", e.message);
 	}
