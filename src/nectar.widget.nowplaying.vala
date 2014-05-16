@@ -1,11 +1,11 @@
 class Nectar.Widget.NowPlaying : Gtk.Box {
-	public Gtk.Image image;
+	public Nectar.Widget.Image image;
 	private Gtk.Box _databox;
 	public Gtk.Label title;
 	public Gtk.Label subtitle;
 
 	public NowPlaying () {
-		this.image = new Gtk.Image();
+		this.image = new Nectar.Widget.Image();
 		this.pack_start(this.image);
 
 		this._databox = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
@@ -22,7 +22,7 @@ class Nectar.Widget.NowPlaying : Gtk.Box {
 	public NowPlaying.with_anime_series (Nectar.Model.AnimeSeries anime) {
 		this();
 		this.remove(this.image);
-		this.image = new Nectar.Widget.WebImage(anime.cover_image, null);
+		this.image = new Nectar.Widget.Image.from_url(anime.cover_image, null);
 		this.image.height_request = 80;
 		this.pack_start(this.image);
 
