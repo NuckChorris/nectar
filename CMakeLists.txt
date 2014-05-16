@@ -62,6 +62,7 @@ VALA_C nectar
 	src/nectar.util.filecache.vala
 	src/nectar.util.logger.vala
 	src/nectar.util.settings.vala
+	src/nectar.widget.prefsmenu.vala
 	src/nectar.widget.image.vala
 	src/nectar.widget.nowplaying.vala
 	src/nectar.widget.loginpage.vala
