@@ -60,7 +60,7 @@ vala_precompile (
 VALA_C nectar
 	src/nectar.model.animeseries.vala
 	src/nectar.util.filecache.vala
-	src/nectar.widget.webimage.vala
+	src/nectar.widget.image.vala
 	src/nectar.widget.nowplaying.vala
 	src/nectar.vala
 PACKAGES
