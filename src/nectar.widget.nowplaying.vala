@@ -21,6 +21,9 @@ class Nectar.Widget.NowPlaying : Gtk.Box {
 	}
 	public NowPlaying.with_anime_series (Nectar.Model.AnimeSeries anime) {
 		this();
+		this.set_anime_series(anime);
+	}
+	public void set_anime_series (Nectar.Model.AnimeSeries anime) {
 		this.remove(this.image);
 		this.image = new Nectar.Widget.Image.from_url(anime.cover_image, null);
 		this.image.height_request = 80;
