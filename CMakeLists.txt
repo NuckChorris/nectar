@@ -64,6 +64,7 @@ VALA_C nectar
 	src/nectar.util.settings.vala
 	src/nectar.widget.image.vala
 	src/nectar.widget.nowplaying.vala
+	src/nectar.widget.loginpage.vala
 	src/nectar.vala
 PACKAGES
 	gtk+-3.0
