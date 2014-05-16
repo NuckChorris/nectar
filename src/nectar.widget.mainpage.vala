@@ -4,9 +4,9 @@ class Nectar.Widget.MainPage : Gtk.Box {
 	private Nectar.Widget.PrefsBar _prefs_bar = new Nectar.Widget.PrefsBar();
 	public MainPage () {
 		this.orientation = Gtk.Orientation.VERTICAL;
-		this.pack_start(this._nowplaying);
-		this.pack_start(this._buttfuck);
-		this.pack_end(this._prefs_bar);
+		this.pack_start(this._nowplaying, false);
+		this.pack_start(this._buttfuck, true);
+		this.pack_end(this._prefs_bar, false);
 
 		var series = Nectar.Model.AnimeSeries();
 		series.title = "Puella Magi Madoka Magica";
