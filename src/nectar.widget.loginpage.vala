@@ -1,4 +1,5 @@
 class Nectar.Widget.LoginPage : Gtk.Box {
+	private Gtk.Image _hummingbird_logo = new Gtk.Image.from_resource("/com/PLejeck/Nectar/hummingbird-logo.jpg");
 	private Gtk.Entry _username_entry = new Gtk.Entry();
 	private Gtk.Entry _password_entry = new Gtk.Entry();
 	private Gtk.Button _login_button = new Gtk.Button.with_label(_("Login"));
@@ -14,6 +15,7 @@ class Nectar.Widget.LoginPage : Gtk.Box {
 		this.valign = Gtk.Align.CENTER;
 		this.set_orientation(Gtk.Orientation.VERTICAL);
 
+		this.add(this._hummingbird_logo);
 		this.add(this._username_entry);
 		this.add(this._password_entry);
 		this.add(this._login_button);
