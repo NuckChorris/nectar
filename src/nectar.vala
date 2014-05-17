@@ -14,6 +14,11 @@ int main (string[] args) {
 
 	var window = new Nectar.Widget.AppWindow();
 
+	File cssfile = File.new_for_uri("resource:///com/PLejeck/Nectar/style.css");
+	Gtk.CssProvider css = new Gtk.CssProvider();
+	css.load_from_file(cssfile);
+	Gtk.StyleContext.add_provider_for_screen(window.screen, css, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
 	window.show_all ();
 
 	Gtk.main ();

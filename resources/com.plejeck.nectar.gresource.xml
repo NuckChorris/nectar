@@ -2,5 +2,6 @@
 	<gresource prefix="/com/PLejeck/Nectar">
 		<file>hummingbird-logo.jpg</file>
 		<file>throbber.gif</file>
+		<file>style.css</file>
 	</gresource>
 </gresources>
