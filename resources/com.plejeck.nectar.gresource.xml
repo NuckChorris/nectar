@@ -1,0 +1,6 @@
+<gresources>
+	<gresource prefix="/com/PLejeck/Nectar">
+		<file>hummingbird-logo.jpg</file>
+		<file>throbber.gif</file>
+	</gresource>
+</gresources>

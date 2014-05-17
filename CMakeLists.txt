@@ -48,6 +48,12 @@ link_directories ( ${DEPS_LIBRARY_DIRS} )
 add_definitions ( ${DEPS_CFLAGS} )
 
 
+### GRESOURCES ###
+include ( GResource )
+set ( GRESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resources/com.plejeck.nectar.gresource.xml )
+glib_compile_resources ( RESOURCE_FILE SOURCE resources/com.plejeck.nectar.gresource.xml )
+
+
 ### VALA FILES ###
 find_package ( Vala REQUIRED )
 include ( ValaVersion )
