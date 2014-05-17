@@ -2,6 +2,8 @@ int main (string[] args) {
 	Gtk.init(ref args);
 
 
+	var settings = new Nectar.Util.Settings.from_data_dirs();
+
 	var session = new Soup.Session();
 	session.max_conns = 10;
 	session.max_conns_per_host = 6;
