@@ -1,58 +1,88 @@
-class Nectar.Widget.Image : Gtk.Misc {
+struct Nectar.Model.ImageSize {
+	public int w;
+	public int h;
+}
+public class Nectar.Widget.Image : Gtk.Misc {
+	// Literally just cheat for now
+	public int max_height = int.MAX;
+	public int max_width = int.MAX;
 	private Cairo.Pattern _image;
-	private int[] _imagesize;
-	private Gtk.SizeRequestMode? _request_mode;
+	private Nectar.Model.ImageSize _imgsize;
+	public Gtk.SizeRequestMode? request_mode;
 	private Cairo.Matrix _matrix {
 		get {
 			Cairo.Matrix matrix = Cairo.Matrix.identity();
 
-			int width = get_allocated_width();
-			int height = get_allocated_height();
+			double width_container = get_allocated_width();
+			double height_container = get_allocated_height();
+			double width_outer = Math.fmin(width_container, this.max_width);
+			double height_outer = Math.fmin(height_container, this.max_height);
 
-			matrix.scale(1, 1);
+			//
+			// Scale
+			//
+			double fatness_outer = width_outer / height_outer;
+			double fatness_inner = (double)this._imgsize.w / (double)this._imgsize.h;
+			double scale, x = 0, y = 0;
+
+			if (fatness_inner >= fatness_outer) {
+				scale = (double)this._imgsize.w / width_outer;
+			} else {
+				scale = (double)this._imgsize.h / height_outer;
+			}
+			x = ((double)this._imgsize.w / scale / 2) - ((double)width_container / 2);
+			y = ((double)this._imgsize.h / scale / 2) - ((double)height_container / 2);
+			matrix.scale(scale, scale);
+			matrix.translate((int)(x), (int)(y));
 
 			return matrix;
 		}
 	}
-	public new Gtk.SizeRequestMode get_request_mode () {
-		// Attempt the default first
-		if (this._request_mode != null)
-			return this._request_mode;
-
-		if (this._imagesize[1] > this._imagesize[0]) {
-			return Gtk.SizeRequestMode.WIDTH_FOR_HEIGHT;
+	public override Gtk.SizeRequestMode get_request_mode () {
+		if (this.request_mode != null)
+			return this.request_mode;
+		return Gtk.SizeRequestMode.WIDTH_FOR_HEIGHT;
+	}
+	public override void get_preferred_width (out int min, out int natural) {
+		min = 1;
+		natural = (this._imgsize.w > 0) ? this._imgsize.w : 1;
+		if (this.max_width < natural)
+			natural = this.max_width;
+	}
+	public override void get_preferred_height (out int min, out int natural) {
+		min = 1;
+		natural = (this._imgsize.h > 0) ? this._imgsize.h : 1;
+		if (this.max_height < natural)
+			natural = this.max_height;
+	}
+	public override void get_preferred_height_for_width (int width, out int min, out int height) {
+		min = 1;
+		if (this._imgsize.h == 0 || this._imgsize.w == 0) {
+			height = 1;
 		} else {
-			return Gtk.SizeRequestMode.HEIGHT_FOR_WIDTH;
+			height = (int)((double)width * ((double)this._imgsize.h / (double)this._imgsize.w));
 		}
 	}
-	public new void get_preferred_width (out int min, out int natural) {
-		min = 0;
-		natural = this._imagesize[0];
-	}
-	public new void get_preferred_height (out int min, out int natural) {
-		min = 0;
-		natural = this._imagesize[1];
-	}
-	public new void get_preferred_height_for_width (int width, out int min, out int height) {
-		min = 0;
-		height = width * (this._imagesize[0] / this._imagesize[1]);
-	}
-	public new void get_preferred_width_for_height (int height, out int min, out int width) {
-		min = 0;
-		width = height * (this._imagesize[1] / this._imagesize[0]);
+	public override void get_preferred_width_for_height (int height, out int min, out int width) {
+		min = 1;
+		if (this._imgsize.h == 0 || this._imgsize.w == 0) {
+			width = 1;
+		} else {
+			width = (int)((double)height * ((double)this._imgsize.w / (double)this._imgsize.h));
+		}
 	}
 	public Image () {
+		this.expand = false;
 	}
 	public Image.from_file (File file) throws Error {
 		this();
 		this.set_from_file(file);
 	}
-	public Image.from_url (string url, Soup.Session? session) throws Error {
+	public Image.from_url (string url, Soup.Session session = new Soup.Session()) throws Error {
 		this();
 		this.set_from_url(url, session);
 	}
-	public void set_from_url (string url, Soup.Session? session) throws Error {
-		session = session ?? new Soup.Session();
+	public void set_from_url (string url, Soup.Session session = new Soup.Session()) throws Error {
 		Nectar.Util.FileCache cache = new Nectar.Util.FileCache("webimage");
 
 		File file = cache.lookup(url);
@@ -82,12 +112,13 @@ class Nectar.Widget.Image : Gtk.Misc {
 		// The pixbuf engine has far wider support for files like JPEG and shit
 		var pixbuf = new Gdk.Pixbuf.from_file(file.get_path());
 		this._image = new Cairo.Pattern.for_surface(Gdk.cairo_surface_create_from_pixbuf(pixbuf, 1, this.get_parent_window()));
-		this._imagesize = {pixbuf.width, pixbuf.height};
+		this._imgsize = {pixbuf.width, pixbuf.height};
 	}
 	public override bool draw (Cairo.Context cr) {
 		int width = get_allocated_width();
 		int height = get_allocated_height();
 
+		this._image.set_matrix(this._matrix);
 		cr.set_source(this._image);
 		cr.rectangle(0, 0, width, height);
 		cr.fill();
