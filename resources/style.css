@@ -15,17 +15,18 @@ NectarWidgetLoginPage > GtkEntry {
 /* Sensitive Button */
 NectarWidgetLoginPage > GtkButton {
 	background-color: #272c33;
+	transition: .3s background-color;
 }
-NectarWidgetLoginPage > GtkButton > GtkLabel {
+NectarWidgetLoginPage > GtkButton GtkLabel {
+	background-color: transparent;
 	color: #d8dfe7;
 }
 /* Insensitive Button */
 NectarWidgetLoginPage > GtkButton:insensitive {
 	background-color: #2c323c;
 }
-NectarWidgetLoginPage > GtkButton:insensitive > GtkLabel {
-	background-color: transparent;
-	color: purple;
+NectarWidgetLoginPage > GtkButton:insensitive GtkLabel {
+	color: #818e9e;
 }
 /* Label at bottom */
 NectarWidgetLoginPage > GtkLabel {
