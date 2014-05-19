@@ -3,5 +3,6 @@
 		<file>hummingbird-logo.jpg</file>
 		<file>throbber.gif</file>
 		<file>style.css</file>
+		<file>LoginPage.ui</file>
 	</gresource>
 </gresources>

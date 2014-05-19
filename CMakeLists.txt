@@ -86,6 +86,7 @@ PACKAGES
 OPTIONS
 	--thread
 	--target-glib=2.38
+	--gresources ${GRESOURCES}
 )
 
 # Source files definition

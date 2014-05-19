@@ -1,43 +1,64 @@
-class Nectar.Widget.LoginPage : Gtk.Box {
-	private Gtk.Image _hummingbird_logo = new Gtk.Image.from_resource("/com/PLejeck/Nectar/hummingbird-logo.jpg");
-	private Gtk.Entry _username_entry = new Gtk.Entry();
-	private Gtk.Entry _password_entry = new Gtk.Entry();
-	private Gtk.Button _login_button = new Gtk.Button.with_label(_("Login"));
-	private Gtk.Label _register_link = new Gtk.Label(_("Or <a href=\"http://hummingbird.me/\">Register</a>"));
+[GtkTemplate (ui = "/com/PLejeck/Nectar/LoginPage.ui")]
+public class Nectar.Widget.LoginPage : Gtk.Box {
 	public string password {
-		get { return this._password_entry.text; }
+		get { return password_entry.text; }
+		set { password_entry.text = value; }
 	}
 	public string username {
-		get { return this._username_entry.text; }
+		get { return username_entry.text; }
+		set { username_entry.text = value; }
 	}
+	private uint? idle_timer = null;
+	[GtkChild]
+	private Gtk.Entry username_entry;
+	[GtkChild]
+	private Gtk.Entry password_entry;
+	[GtkChild]
+	private Gtk.Button login_button;
+	[GtkChild]
+	private Gtk.Stack logo_stack;
+j
 	public LoginPage () {
-		this.halign = Gtk.Align.CENTER;
-		this.valign = Gtk.Align.CENTER;
-		this.set_orientation(Gtk.Orientation.VERTICAL);
-
-		this.add(this._hummingbird_logo);
-		this.add(this._username_entry);
-		this.add(this._password_entry);
-		this.add(this._login_button);
-		this.add(this._register_link);
-
-		this._register_link.use_markup = true;
-		this._username_entry.placeholder_text = C_("Login", "Username");
-		this._password_entry.placeholder_text = C_("Login", "Password");
-		this._password_entry.visibility = false;
-		this._login_button.clicked.connect(() => {
-			login();
-		});
-		this._username_entry.activate.connect(() => {
-			this._login_button.clicked();
-		});
-		this._password_entry.activate.connect(() => {
-			this._login_button.clicked();
+		typing_paused.connect(() => {
+			
 		});
 	}
 	public LoginPage.with_username (string username) {
+		username_entry.text = username;
 		this();
-		this._username_entry.text = username;
 	}
-	public signal void login ();
+
+	[GtkCallback]
+	private void on_username_changed () {
+		login_button.sensitive = (username_entry.text_length != 0 && password_entry.text_length != 0);
+
+		if (idle_timer != null) {
+			Source.remove(idle_timer);
+			idle_timer = null;
+		}
+
+		idle_timer = Timeout.add(200, () => {
+			idle_timer = null;
+			if (username_entry.text_length == 0)
+				return false;
+			typing_paused();
+			return false;
+		});
+	}
+	[GtkCallback]
+	private bool on_username_unfocus () {
+		if (username_entry.text.length != 0)
+			typing_paused();
+		return false;
+	}
+	[GtkCallback]
+	private void on_password_changed () {
+		login_button.sensitive = (username_entry.text_length != 0 && password_entry.text_length != 0);
+	}
+	[GtkCallback]
+	private void on_login_clicked () {
+		login();
+	}
+	public signal void login();
+	public signal void typing_paused();
 }
