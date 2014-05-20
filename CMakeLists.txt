@@ -65,19 +65,19 @@ ensure_vala_version ( "0.20" MINIMUM )
 include ( ValaPrecompile )
 vala_precompile (
 VALA_C nectar
-	src/nectar.model.animeseries.vala
-	src/nectar.model.user.vala
-	src/nectar.backend.hummingbird.vala
+	src/Models/AnimeSeries.vala
+	src/Models/User.vala
+	src/Backends/Hummingbird.vala
 	src/nectar.util.filecache.vala
 	src/nectar.util.logger.vala
 	src/nectar.util.settings.vala
-	src/nectar.widget.prefsmenu.vala
-	src/nectar.widget.prefsbar.vala
-	src/nectar.widget.image.vala
-	src/nectar.widget.nowplaying.vala
-	src/nectar.widget.mainpage.vala
-	src/nectar.widget.loginpage.vala
-	src/nectar.widget.appwindow.vala
+	src/Widgets/PrefsMenu.vala
+	src/Widgets/PrefsBar.vala
+	src/Widgets/Image.vala
+	src/Widgets/NowPlaying.vala
+	src/Widgets/MainPage.vala
+	src/Widgets/LoginPage.vala
+	src/Widgets/AppWindow.vala
 	src/nectar.vala
 PACKAGES
 	gtk+-3.0

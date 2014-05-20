@@ -4,8 +4,8 @@ struct Nectar.Model.ImageSize {
 }
 public class Nectar.Widget.Image : Gtk.Misc {
 	// Literally just cheat for now
-	public int max_height = int.MAX;
-	public int max_width = int.MAX;
+	public int max_height { get; set; default = int.MAX; }
+	public int max_width { get; set; default = int.MAX; }
 	private Cairo.Pattern _image;
 	private Nectar.Model.ImageSize _imgsize;
 	public Gtk.SizeRequestMode? request_mode;
@@ -113,6 +113,8 @@ public class Nectar.Widget.Image : Gtk.Misc {
 		var pixbuf = new Gdk.Pixbuf.from_file(file.get_path());
 		this._image = new Cairo.Pattern.for_surface(Gdk.cairo_surface_create_from_pixbuf(pixbuf, 1, this.get_parent_window()));
 		this._imgsize = {pixbuf.width, pixbuf.height};
+		stderr.printf("File: %s\n", file.get_path());
+		stderr.printf("Size: %dx%d\n", pixbuf.width, pixbuf.height);
 	}
 	public override bool draw (Cairo.Context cr) {
 		int width = get_allocated_width();

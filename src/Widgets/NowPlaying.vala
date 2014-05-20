@@ -6,6 +6,7 @@ class Nectar.Widget.NowPlaying : Gtk.Box {
 
 	public NowPlaying () {
 		this.image = new Nectar.Widget.Image();
+		this.image.max_height = 60;
 		this.pack_start(this.image);
 
 		this._databox = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
@@ -17,7 +18,9 @@ class Nectar.Widget.NowPlaying : Gtk.Box {
 		this._databox.pack_end(this.subtitle);
 
 		this.set_orientation(Gtk.Orientation.HORIZONTAL);
-		this.height_request = 80;
+		this.height_request = 50;
+		this.vexpand = false;
+		this.vexpand_set = true;
 	}
 	public NowPlaying.with_anime_series (Nectar.Model.AnimeSeries anime) {
 		this();
@@ -26,6 +29,7 @@ class Nectar.Widget.NowPlaying : Gtk.Box {
 	public void set_anime_series (Nectar.Model.AnimeSeries anime) {
 		this.remove(this.image);
 		this.image = new Nectar.Widget.Image.from_url(anime.cover_image);
+		this.image.request_mode = Gtk.SizeRequestMode.WIDTH_FOR_HEIGHT;
 		this.image.height_request = 80;
 		this.pack_start(this.image);
 
