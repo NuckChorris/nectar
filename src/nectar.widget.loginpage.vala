@@ -8,7 +8,10 @@ public class Nectar.Widget.LoginPage : Gtk.Box {
 		get { return username_entry.text; }
 		set { username_entry.text = value; }
 	}
+	public Nectar.Backend.Hummingbird backend;
 	private uint? idle_timer = null;
+	private string? currently_displayed_user = null;
+
 	[GtkChild]
 	private Gtk.Entry username_entry;
 	[GtkChild]
@@ -17,15 +20,37 @@ public class Nectar.Widget.LoginPage : Gtk.Box {
 	private Gtk.Button login_button;
 	[GtkChild]
 	private Gtk.Stack logo_stack;
-j
+	[GtkChild]
+	private Nectar.Widget.Image avatar;
+
 	public LoginPage () {
+		backend = new Nectar.Backend.Hummingbird("9YDRvmfvHpw7zPRhS9IXp6fNwSQgY5Cm");
 		typing_paused.connect(() => {
-			
+			if (currently_displayed_user != username_entry.text) {
+				logo_stack.visible_child_name = "throbber";
+				backend.get_user.begin(username_entry.text, (obj, res) => {
+					Nectar.Model.User? user = backend.get_user.end(res);
+					if (user != null) {
+						currently_displayed_user = username_entry.text;
+						set_avatar(user.avatar.to_string(false));
+						logo_stack.visible_child_name = "avatar";
+					} else {
+						logo_stack.visible_child_name = "logo";
+					}
+				});
+			}
+		});
+		typing_emptied.connect(() => {
+			logo_stack.visible_child_name = "logo";
 		});
 	}
 	public LoginPage.with_username (string username) {
 		username_entry.text = username;
 		this();
+	}
+
+	public void set_avatar (string url) {
+		avatar.set_from_url(url);
 	}
 
 	[GtkCallback]
@@ -37,18 +62,23 @@ j
 			idle_timer = null;
 		}
 
-		idle_timer = Timeout.add(200, () => {
+		idle_timer = Timeout.add(300, () => {
 			idle_timer = null;
-			if (username_entry.text_length == 0)
-				return false;
-			typing_paused();
+			if (username_entry.text_length != 0) {
+				typing_paused();
+			} else {
+				typing_emptied();
+			}
 			return false;
 		});
 	}
 	[GtkCallback]
 	private bool on_username_unfocus () {
-		if (username_entry.text.length != 0)
+		if (username_entry.text.length != 0) {
 			typing_paused();
+		} else {
+			typing_emptied();
+		}
 		return false;
 	}
 	[GtkCallback]
@@ -61,4 +91,5 @@ j
 	}
 	public signal void login();
 	public signal void typing_paused();
+	public signal void typing_emptied();
 }

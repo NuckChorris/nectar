@@ -40,6 +40,7 @@ pkg_check_modules ( DEPS
 	REQUIRED glib-2.0
 	REQUIRED gmodule-2.0
 	REQUIRED libsoup-2.4
+	REQUIRED json-glib-1.0
 	REQUIRED gtk+-3.0>=3.10
 )
 include_directories ( ${DEPS_INCLUDE_DIRS} )
@@ -65,6 +66,8 @@ include ( ValaPrecompile )
 vala_precompile (
 VALA_C nectar
 	src/nectar.model.animeseries.vala
+	src/nectar.model.user.vala
+	src/nectar.backend.hummingbird.vala
 	src/nectar.util.filecache.vala
 	src/nectar.util.logger.vala
 	src/nectar.util.settings.vala
@@ -79,6 +82,7 @@ VALA_C nectar
 PACKAGES
 	gtk+-3.0
 	glib-2.0
+	json-glib-1.0
 	libsoup-2.4
 	gmodule-2.0
 	cairo
