@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<!-- interface-requires gtk+ 3.10 -->
+	<template class="NectarWidgetNowPlaying" parent="GtkBox">
+		<property name="orientation">horizontal</property>
+		<property name="spacing">0</property>
+		<child>
+			<object class="NectarWidgetImage" id="poster">
+				<property name="max-height">60</property>
+			</object>
+			<packing>
+				<property name="expand">true</property>
+				<property name="fill">true</property>
+				<property name="position">0</property>
+			</packing>
+		</child>
+		<child>
+			<object class="GtkBox">
+				<property name="orientation">vertical</property>
+				<child>
+					<object class="GtkLabel" id="title" />
+					<packing>
+						<property name="position">0</property>
+					</packing>
+				</child>
+				<child>
+					<object class="GtkLabel" id="subtitle" />
+					<packing>
+						<property name="position">1</property>
+					</packing>
+				</child>
+			</object>
+			<packing>
+				<property name="expand">true</property>
+				<property name="fill">true</property>
+				<property name="position">1</property>
+			</packing>
+		</child>
+	</template>
+</interface>

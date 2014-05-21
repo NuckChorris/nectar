@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<!-- interface-requires gtk+ 3.10 -->
+	<template class="NectarWidgetLoginPage" parent="GtkBox">
+		<property name="orientation">vertical</property>
+		<property name="spacing">8</property>
+		<property name="halign">center</property>
+		<property name="valign">center</property>
+		<child>
+			<object class="GtkStack" id="logo_stack">
+				<property name="transition_type">crossfade</property>
+				<property name="homogeneous">false</property>
+				<child>
+					<object class="GtkImage" id="logo">
+						<property name="resource">/com/plejeck/nectar/hummingbird-logo.jpg</property>
+						<property name="height-request">100</property>
+					</object>
+					<packing>
+						<property name="name">logo</property>
+					</packing>
+				</child>
+				<child>
+					<object class="GtkImage" id="throbber">
+						<property name="resource">/com/plejeck/nectar/throbber.gif</property>
+						<property name="height-request">100</property>
+						<property name="width-request">100</property>
+					</object>
+					<packing>
+						<property name="name">throbber</property>
+					</packing>
+				</child>
+				<child>
+					<object class="NectarWidgetImage" id="avatar">
+						<property name="max_height">100</property>
+						<property name="max_width">100</property>
+					</object>
+					<packing>
+						<property name="name">avatar</property>
+					</packing>
+				</child>
+			</object>
+		</child>
+		<child>
+			<object class="GtkEntry" id="username_entry">
+				<property name="placeholder_text" translatable="yes">Username</property>
+				<property name="width_request">250</property>
+				<signal name="changed" handler="on_username_changed" swapped="no"/>
+				<signal name="activate" handler="on_login_clicked" swapped="no"/>
+				<signal name="focus-out-event" handler="on_username_unfocus" swapped="no"/>
+			</object>
+		</child>
+		<child>
+			<object class="GtkEntry" id="password_entry">
+				<property name="placeholder_text" translatable="yes">Password</property>
+				<property name="width_request">250</property>
+				<property name="visibility">false</property>
+				<signal name="changed" handler="on_password_changed" swapped="no"/>
+				<signal name="activate" handler="on_login_clicked" swapped="no"/>
+			</object>
+		</child>
+		<child>
+			<object class="GtkButton" id="login_button">
+				<property name="sensitive">false</property>
+				<property name="label" translatable="yes">Login</property>
+				<signal name="clicked" handler="on_login_clicked" swapped="no"/>
+			</object>
+		</child>
+		<child>
+			<object class="GtkLabel" id="register_link">
+				<property name="use-markup">true</property>
+				<property name="label" translatable="yes"><![CDATA[Or <a href="http://hummingbird.me/register">Register</a>]]></property>
+			</object>
+		</child>
+	</template>
+</interface>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<!-- interface-requires gtk+ 3.10 -->
+	<template class="NectarWidgetMainPage" parent="GtkBox">
+		<property name="orientation">vertical</property>
+		<property name="spacing">0</property>
+		<child>
+			<object class="NectarWidgetNowPlaying" id="nowplaying" />
+			<packing>
+				<property name="expand">false</property>
+				<property name="fill">true</property>
+				<property name="position">0</property>
+			</packing>
+		</child>
+		<child>
+			<object class="GtkScrolledWindow" id="grid" />
+			<packing>
+				<property name="expand">true</property>
+				<property name="fill">true</property>
+				<property name="position">1</property>
+			</packing>
+		</child>
+		<child>
+			<object class="NectarWidgetPrefsBar" id="prefsbar" />
+			<packing>
+				<property name="expand">true</property>
+				<property name="fill">true</property>
+				<property name="position">2</property>
+			</packing>
+		</child>
+	</template>
+</interface>

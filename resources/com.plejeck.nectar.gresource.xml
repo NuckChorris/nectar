@@ -1,8 +1,10 @@
 <gresources>
-	<gresource prefix="/com/PLejeck/Nectar">
+	<gresource prefix="/com/plejeck/nectar">
 		<file>hummingbird-logo.jpg</file>
 		<file>throbber.gif</file>
 		<file>style.css</file>
 		<file>LoginPage.ui</file>
+		<file>MainPage.ui</file>
+		<file>NowPlaying.ui</file>
 	</gresource>
 </gresources>
