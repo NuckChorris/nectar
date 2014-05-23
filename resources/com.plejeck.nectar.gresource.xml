@@ -6,5 +6,6 @@
 		<file>LoginPage.ui</file>
 		<file>MainPage.ui</file>
 		<file>NowPlaying.ui</file>
+		<file>AppWindow.ui</file>
 	</gresource>
 </gresources>

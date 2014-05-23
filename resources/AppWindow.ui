@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<!-- interface-requires gtk+ 3.10 -->
+	<template class="NectarWidgetAppWindow" parent="GtkWindow">
+		<property name="default-height">400</property>
+		<property name="default-width">300</property>
+		<property name="border-width">0</property>
+		<property name="title" translatable="true">Nectar</property>
+		<child>
+			<object class="GtkStack" id="stack">
+				<property name="homogeneous">true</property>
+				<property name="transition-type">slide-down</property>
+				<child>
+					<object class="NectarWidgetLoginPage" id="login_page" />
+					<packing>
+						<property name="name">login-page</property>
+					</packing>
+				</child>
+				<child>
+					<object class="NectarWidgetMainPage" id="main_page" />
+					<packing>
+						<property name="name">main-page</property>
+					</packing>
+				</child>
+			</object>
+		</child>
+	</template>
+</interface>
