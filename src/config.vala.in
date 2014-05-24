@@ -1,0 +1,7 @@
+namespace Config {
+	public const string HUMMINGBIRD_KEY = "@HUMMINGBIRD_KEY@";
+	public const string NECTAR_VERSION = "@VERSION@-@VERSION_INFO@";
+	public const string COPYRIGHT = "@COPYRIGHT@";
+	public const string WEBSITE = "@WEBSITE@";
+	public const string DESCRIPTION = "@DESCRIPTION@";
+}

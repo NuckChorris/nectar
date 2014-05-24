@@ -62,9 +62,12 @@ ensure_vala_version ( "0.20" MINIMUM )
 
 
 ### Compile ###
+configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/src/config.vala.in"
+                "${CMAKE_CURRENT_SOURCE_DIR}/src/config.vala")
 include ( ValaPrecompile )
 vala_precompile (
 VALA_C nectar
+	src/config.vala
 	src/Models/AnimeSeries.vala
 	src/Models/User.vala
 	src/Backends/Hummingbird.vala
