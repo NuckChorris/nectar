@@ -23,8 +23,18 @@ public class Nectar.Widget.LoginPage : Gtk.Box {
 	[GtkChild]
 	private Nectar.Widget.Image avatar;
 
-	public LoginPage () {
-		backend = new Nectar.Backend.Hummingbird("9YDRvmfvHpw7zPRhS9IXp6fNwSQgY5Cm");
+	public LoginPage.with_username (string username) {
+		username_entry.text = username;
+		this();
+	}
+
+	public void set_avatar (string url) {
+		avatar.set_from_url(url);
+	}
+
+	[GtkCallback]
+	public void on_realize () {
+		backend = new Nectar.Backend.Hummingbird(Config.HUMMINGBIRD_KEY);
 		typing_paused.connect(() => {
 			if (currently_displayed_user != username_entry.text) {
 				logo_stack.visible_child_name = "throbber";
@@ -44,15 +54,6 @@ public class Nectar.Widget.LoginPage : Gtk.Box {
 			logo_stack.visible_child_name = "logo";
 		});
 	}
-	public LoginPage.with_username (string username) {
-		username_entry.text = username;
-		this();
-	}
-
-	public void set_avatar (string url) {
-		avatar.set_from_url(url);
-	}
-
 	[GtkCallback]
 	private void on_username_changed () {
 		login_button.sensitive = (username_entry.text_length != 0 && password_entry.text_length != 0);

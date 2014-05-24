@@ -6,6 +6,7 @@
 		<property name="spacing">8</property>
 		<property name="halign">center</property>
 		<property name="valign">center</property>
+		<signal name="realize" handler="on_realize" swapped="no"/>
 		<child>
 			<object class="GtkStack" id="logo_stack">
 				<property name="transition_type">crossfade</property>
