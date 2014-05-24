@@ -45,6 +45,7 @@ public class Nectar.Widget.LoginPage : Gtk.Box {
 						set_avatar(user.avatar.to_string(false));
 						logo_stack.visible_child_name = "avatar";
 					} else {
+						currently_displayed_user = null;
 						logo_stack.visible_child_name = "logo";
 					}
 				});
