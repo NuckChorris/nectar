@@ -1,0 +1,31 @@
+# The files in XDG_DATA_DIRS are merged and sorted by (weight,declaration order) then executed in
+# order until a match is found.
+#
+# Format: GROUP:MODIFIER REGEX FLAGS,TO,USE WEIGHT
+#
+# Groups                TV, OVA, MANGA, SPECIAL, MOVIE, FLAG
+# Regular Expression    Perl-compatible regular expression
+# Post Flags            NONE, UNDERSCORES
+# Weight                Sorting mechanism. lower number = higher priority
+#
+# The flag group takes a modifier which says which flag to set.  In this group, the regex is treated
+# as a test.
+
+# [Subber] Series Title - 01*.mkv
+TV /^\[(?<subber>[^\]]+)\]\s(?<series>.+)\s-\s(?<episode>[\d\.]+)(?:.*\[?(?:\d+x)?(?<resolution>1080|720|480|360)[ipIP]?\]?)?.*$/ NONE 100
+
+# [Subber]_Series_Title_-_01*.mkv
+TV /^\[(?<subber>[^\]]+)\]_(?<series>[^-]+)_-_(?<episode>[\d\.]+)(?:.*\[?(?:\d+x)?(?<resolution>1080|720|480|360)[ipIP]?\]?)?.*$/ UNDERSCORES 100
+
+# [Subber]_Series_Title_01*.mkv
+TV /^\[(?<subber>[^\]]+)\]_(?<series>[^0-9]+)_(?<episode>[\d\.]+)(?:.*\[?(?:\d+x)?(?<resolution>1080|720|480|360)[ipIP]?\]?)?.*$/ UNDERSCORES 100
+
+# Series Title - 01*.mkv
+TV /^(?<series>.+)\s-\s(?<episode>[\d\.]+)(?:.*\[?(?:\d+x)?(?<resolution>1080|720|480|360)[ipIP]?\]?)?.*$/ NONE 100
+
+# [stupid][subbers][use][this][wretched][format].mkv
+MOVIE /^\[(?<subber>[^\]]+)\]\[(?<series>[^\]]+)\](?:\[.+\]|\[(?:\d+x)?(?<resolution>1080|720|480|360)[ipIP]?\])*.*$/ NONE 100
+
+# Flag Hi10P
+FLAG:10BIT /Hi10P|10-?bit/i 10BIT 100
+
