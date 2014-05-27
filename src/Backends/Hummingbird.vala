@@ -28,7 +28,7 @@ public class Nectar.Backend.Hummingbird : Object, Nectar.Backend.Backend {
 		Soup.MessageBody body = msg.request_body;
 
 		headers.append("X-Mashape-Authorization", api_key);
-		body.append(Soup.MemoryUse.TAKE, payload.data);
+		body.append_take(payload.data);
 
 		Json.Parser parser = new Json.Parser();
 		InputStream stream = yield session.send_async(msg);
