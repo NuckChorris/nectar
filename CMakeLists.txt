@@ -64,6 +64,9 @@ ensure_vala_version ( "0.20" MINIMUM )
 ### Compile ###
 configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/src/config.vala.in"
                 "${CMAKE_CURRENT_SOURCE_DIR}/src/config.vala")
+if (CMAKE_BUILD_TYPE MATCHES Debug)
+	set (VALA_FLAGS "--debug")
+endif (CMAKE_BUILD_TYPE MATCHES Debug)
 include ( ValaPrecompile )
 vala_precompile (
 VALA_C nectar
@@ -96,6 +99,7 @@ OPTIONS
 	--thread
 	--target-glib=2.38
 	--gresources ${GRESOURCES}
+	${VALA_FLAGS}
 )
 
 # Source files definition
