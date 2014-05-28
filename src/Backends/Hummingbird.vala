@@ -21,13 +21,15 @@ public class Nectar.Backend.Hummingbird : Object, Nectar.Backend.Backend {
 		this(api_key);
 	}
 
-	public async Json.Node? api_call (string method, string path, string payload = "") throws Error {
+	public async Json.Node? api_call (string method, string path, string payload = "", string content_type = "text/plain") throws Error {
 		Soup.URI req = new Soup.URI.with_base(server, path);
 		Soup.Message msg = new Soup.Message.from_uri(method, req);
 		Soup.MessageHeaders headers = msg.request_headers;
 		Soup.MessageBody body = msg.request_body;
 
 		headers.append("X-Mashape-Authorization", api_key);
+		headers.append("Accept", "application/json,*/*;q=0.8");
+		headers.append("Content-Type", content_type);
 		body.append_take(payload.data);
 
 		Json.Parser parser = new Json.Parser();
