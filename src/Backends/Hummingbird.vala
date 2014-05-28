@@ -82,6 +82,7 @@ public class Nectar.Backend.Hummingbird : Object, Nectar.Backend.Backend {
 		return model;
 	}
 	public async string? authenticate (string username, string password) throws Error {
+		Json.Node? root;
 		Json.Builder builder = new Json.Builder();
 		builder.begin_object();
 		builder.set_member_name(username.contains("@") ? "email" : "username");
@@ -92,9 +93,15 @@ public class Nectar.Backend.Hummingbird : Object, Nectar.Backend.Backend {
 		Json.Generator generator = new Json.Generator();
 		generator.set_root(builder.get_root());
 
-		// catch this and shovel it back into my asshole
-		Json.Node? root = yield api_call("POST", "/users/authenticate", generator.to_data(null));
-		if (root == null) return null;
-		return "";
+		try {
+			root = yield api_call("POST", "/users/authenticate", generator.to_data(null), "application/json");
+		} catch (Nectar.Backend.HTTPError e) {
+			if (e is Nectar.Backend.HTTPError.UNAUTHORIZED) {
+				return null;
+			} else {
+				throw e;
+			}
+		}
+		return root.get_string();
 	}
 }
