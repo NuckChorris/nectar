@@ -1,11 +1,14 @@
 public errordomain Nectar.Backend.HTTPError {
-	UNAUTHORIZED,
-	FORBIDDEN,
-	NOT_FOUND,
 	SERVER_ERROR,
 	BAD_GATEWAY,
 	GATEWAY_TIMEOUT,
+	WE_FUCKED_UP,
+	THEY_FUCKED_UP,
 	OTHER
+}
+public struct Nectar.Backend.HTTPReply {
+	uint status;
+	Json.Node? json;
 }
 public class Nectar.Backend.Hummingbird : Object, Nectar.Backend.Backend {
 	private Soup.URI server = new Soup.URI("https://hbrd-v1.p.mashape.com/");
