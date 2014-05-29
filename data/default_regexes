@@ -27,5 +27,5 @@ TV /^(?<series>.+)\s-\s(?<episode>[\d\.]+)(?:.*\[?(?:\d+x)?(?<resolution>1080|72
 MOVIE /^\[(?<subber>[^\]]+)\]\[(?<series>[^\]]+)\](?:\[.+\]|\[(?:\d+x)?(?<resolution>1080|720|480|360)[ipIP]?\])*.*$/ NONE 100
 
 # Flag Hi10P
-FLAG:10BIT /Hi10P|10-?bit/i 10BIT 100
+FLAG:10BIT /Hi10P|10-?bit/i NONE 100
 
