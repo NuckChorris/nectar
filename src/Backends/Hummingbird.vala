@@ -24,7 +24,8 @@ public class Nectar.Backend.Hummingbird : Object, Nectar.Backend.Backend {
 		this(api_key);
 	}
 
-	public async Json.Node? api_call (string method, string path, string payload = "", string content_type = "text/plain") throws Error {
+	public async Nectar.Backend.HTTPReply api_call (string method, string path, string payload = "",
+	                                                string content_type = "text/plain") throws Error {
 		Soup.URI req = new Soup.URI.with_base(server, path);
 		Soup.Message msg = new Soup.Message.from_uri(method, req);
 		Soup.MessageHeaders headers = msg.request_headers;
@@ -37,41 +38,23 @@ public class Nectar.Backend.Hummingbird : Object, Nectar.Backend.Backend {
 
 		Json.Parser parser = new Json.Parser();
 		InputStream stream = yield session.send_async(msg);
-		switch (msg.status_code) {
-			case Soup.Status.UNAUTHORIZED:
-				throw new Nectar.Backend.HTTPError.UNAUTHORIZED("401");
-			case Soup.Status.FORBIDDEN:
-				throw new Nectar.Backend.HTTPError.FORBIDDEN("403");
-			case Soup.Status.NOT_FOUND:
-				throw new Nectar.Backend.HTTPError.NOT_FOUND("404");
-			case Soup.Status.INTERNAL_SERVER_ERROR:
-				throw new Nectar.Backend.HTTPError.SERVER_ERROR("500");
-			case Soup.Status.BAD_GATEWAY:
-				throw new Nectar.Backend.HTTPError.BAD_GATEWAY("502");
-			case Soup.Status.GATEWAY_TIMEOUT:
-				throw new Nectar.Backend.HTTPError.GATEWAY_TIMEOUT("504");
-			default:
-				if (msg.status_code % 400 < 100)
-					throw new Nectar.Backend.HTTPError.OTHER("%u Client Error".printf(msg.status_code));
-				if (msg.status_code % 500 < 100)
-					throw new Nectar.Backend.HTTPError.OTHER("%u Server Error".printf(msg.status_code));
-				break;
-		}
 		yield parser.load_from_stream_async(stream);
-		return parser.get_root();
+		return Nectar.Backend.HTTPReply() {
+			status = msg.status_code,
+			json = parser.get_root()
+		};
 	}
 	public async Nectar.Model.User? get_user (string username) throws Error {
-		Json.Node? root;
-		try {
-			root = yield api_call("GET", "/users/%s".printf(username));
-		} catch (Nectar.Backend.HTTPError e) {
-			if (e is Nectar.Backend.HTTPError.NOT_FOUND) {
-				return null;
-			} else {
-				throw e;
-			}
-		}
-		Json.Object obj = root.get_object();
+		Nectar.Backend.HTTPReply reply = yield api_call("GET", "/users/%s".printf(username));
+
+		if (reply.status == Soup.Status.NOT_FOUND)
+			return null;
+		if (reply.status != Soup.Status.OK && reply.status % 500 < 100)
+			throw new Nectar.Backend.HTTPError.THEY_FUCKED_UP(reply.status.to_string());
+		if (reply.status != Soup.Status.OK && reply.status % 400 < 100)
+			throw new Nectar.Backend.HTTPError.WE_FUCKED_UP(reply.status.to_string());
+
+		Json.Object obj = reply.json.get_object();
 
 		string? avatar = obj.get_string_member("avatar");
 		string? cover_image = obj.get_string_member("cover_image");
@@ -96,15 +79,16 @@ public class Nectar.Backend.Hummingbird : Object, Nectar.Backend.Backend {
 		Json.Generator generator = new Json.Generator();
 		generator.set_root(builder.get_root());
 
-		try {
-			root = yield api_call("POST", "/users/authenticate", generator.to_data(null), "application/json");
-		} catch (Nectar.Backend.HTTPError e) {
-			if (e is Nectar.Backend.HTTPError.UNAUTHORIZED) {
-				return null;
-			} else {
-				throw e;
-			}
-		}
-		return root.get_string();
+		Nectar.Backend.HTTPReply reply = yield api_call("POST", "/users/authenticate",
+		                                                generator.to_data(null), "application/json");
+
+		if (reply.status == Soup.Status.UNAUTHORIZED)
+			return null;
+		if (reply.status != Soup.Status.CREATED && reply.status % 500 < 100)
+			throw new Nectar.Backend.HTTPError.THEY_FUCKED_UP(reply.status.to_string());
+		if (reply.status != Soup.Status.CREATED && reply.status % 400 < 100)
+			throw new Nectar.Backend.HTTPError.WE_FUCKED_UP(reply.status.to_string());
+
+		return reply.json.get_string();
 	}
 }
