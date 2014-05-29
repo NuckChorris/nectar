@@ -38,11 +38,18 @@ public class Nectar.Backend.Hummingbird : Object, Nectar.Backend.Backend {
 
 		Json.Parser parser = new Json.Parser();
 		InputStream stream = yield session.send_async(msg);
-		yield parser.load_from_stream_async(stream);
-		return Nectar.Backend.HTTPReply() {
-			status = msg.status_code,
-			json = parser.get_root()
-		};
+		try {
+			yield parser.load_from_stream_async(stream);
+			return Nectar.Backend.HTTPReply () {
+				status = msg.status_code,
+				json = parser.get_root()
+			};
+		} catch (Error e) {
+			return Nectar.Backend.HTTPReply () {
+				status = msg.status_code,
+				json = null
+			};
+		}
 	}
 	public async Nectar.Model.User? get_user (string username) throws Error {
 		Nectar.Backend.HTTPReply reply = yield api_call("GET", "/users/%s".printf(username));
