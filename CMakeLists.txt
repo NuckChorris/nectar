@@ -76,9 +76,9 @@ VALA_C nectar
 	src/Models/User.vala
 	src/Backend.vala
 	src/Backends/Hummingbird.vala
-	src/nectar.util.filecache.vala
-	src/nectar.util.logger.vala
-	src/nectar.util.settings.vala
+	src/Util/FileCache.vala
+	src/Util/Logger.vala
+	src/Util/Settings.vala
 	src/Widgets/PrefsMenu.vala
 	src/Widgets/PrefsBar.vala
 	src/Widgets/Image.vala
