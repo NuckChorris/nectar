@@ -20,9 +20,5 @@ class Nectar.Widget.AppWindow : Gtk.Window {
 
 		destroy.connect(Gtk.main_quit);
 
-		login_page.login.connect(() => {
-			stdout.printf("Username: %s\nPassword: %s\n", login_page.username, login_page.password);
-			stack.visible_child_name = "main-page";
-		});
 	}
 }
