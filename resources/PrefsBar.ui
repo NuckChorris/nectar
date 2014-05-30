@@ -31,16 +31,19 @@
 		<property name="orientation">horizontal</property>
 		<property name="spacing">0</property>
 		<child>
-			<object class="GtkToggleButton" id="viewmode_list_btn">
+			<object class="GtkRadioButton" id="viewmode_list_btn">
 				<property name="label">List</property>
+				<property name="draw_indicator">false</property>
 			</object>
 			<packing>
 				<property name="position">0</property>
 			</packing>
 		</child>
 		<child>
-			<object class="GtkToggleButton" id="viewmode_grid_btn">
+			<object class="GtkRadioButton" id="viewmode_grid_btn">
 				<property name="label">Grid</property>
+				<property name="group">viewmode_list_btn</property>
+				<property name="draw_indicator">false</property>
 			</object>
 			<packing>
 				<property name="position">1</property>
