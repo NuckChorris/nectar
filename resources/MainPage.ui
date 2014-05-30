@@ -23,7 +23,7 @@
 		<child>
 			<object class="NectarWidgetPrefsBar" id="prefsbar" />
 			<packing>
-				<property name="expand">true</property>
+				<property name="expand">false</property>
 				<property name="fill">true</property>
 				<property name="position">2</property>
 			</packing>
