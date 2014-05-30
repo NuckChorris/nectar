@@ -32,8 +32,10 @@ public class Nectar.Widget.Image : Gtk.Misc {
 			}
 			x = ((double)this._imgsize.w / scale / 2) - ((double)width_container / 2);
 			y = ((double)this._imgsize.h / scale / 2) - ((double)height_container / 2);
-			matrix.scale(scale, scale);
-			matrix.translate((int)(x), (int)(y));
+			if (!(x.is_nan() || y.is_nan() || scale.is_nan())) {
+				matrix.scale(scale, scale);
+				matrix.translate((int)(x), (int)(y));
+			}
 
 			return matrix;
 		}
@@ -117,13 +119,17 @@ public class Nectar.Widget.Image : Gtk.Misc {
 		stderr.printf("Size: %dx%d\n", pixbuf.width, pixbuf.height);
 	}
 	public override bool draw (Cairo.Context cr) {
-		int width = get_allocated_width();
-		int height = get_allocated_height();
+		if (this._image != null) {
+			int width = get_allocated_width();
+			int height = get_allocated_height();
 
-		this._image.set_matrix(this._matrix);
-		cr.set_source(this._image);
-		cr.rectangle(0, 0, width, height);
-		cr.fill();
-		return true;
+			this._image.set_matrix(this._matrix);
+			cr.set_source(this._image);
+			cr.rectangle(0, 0, width, height);
+			cr.fill();
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
