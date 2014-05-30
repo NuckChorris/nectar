@@ -1,5 +1,5 @@
 [GtkTemplate (ui = "/com/plejeck/nectar/LoginPage.ui")]
-public class Nectar.Widget.LoginPage : Gtk.Box {
+public class Nectar.Widget.LoginPage : Gtk.Stack {
 	public string password {
 		get { return password_entry.text; }
 		set { password_entry.text = value; }
