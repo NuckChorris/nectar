@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<!-- interface-requires gtk+ 3.10 -->
+	<template class="NectarWidgetPrefsBar" parent="GtkBox">
+		<property name="orientation">horizontal</property>
+		<property name="spacing">0</property>
+		<child>
+			<object class="GtkToggleButton" id="viewmode_list_btn">
+				<property name="label">List</property>
+			</object>
+			<packing>
+				<property name="position">0</property>
+			</packing>
+		</child>
+		<child>
+			<object class="GtkToggleButton" id="viewmode_grid_btn">
+				<property name="label">Grid</property>
+			</object>
+			<packing>
+				<property name="position">1</property>
+			</packing>
+		</child>
+		<child>
+			<object class="GtkToggleButton" id="scrobble_btn">
+				<property name="label">Scrobble</property>
+			</object>
+			<packing>
+				<property name="pack-type">end</property>
+				<property name="position">1</property>
+			</packing>
+		</child>
+		<child>
+			<object class="GtkMenuButton" id="prefs_btn">
+				<property name="label">Prefs</property>
+			</object>
+			<packing>
+				<property name="pack-type">end</property>
+				<property name="position">0</property>
+			</packing>
+		</child>
+	</template>
+</interface>
