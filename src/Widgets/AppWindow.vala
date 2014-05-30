@@ -1,11 +1,11 @@
 [GtkTemplate (ui = "/com/plejeck/nectar/AppWindow.ui")]
 class Nectar.Widget.AppWindow : Gtk.Window {
 	[GtkChild]
-	private Gtk.Stack stack;
+	public Gtk.Stack stack;
 	[GtkChild]
-	private Nectar.Widget.LoginPage login_page;
+	public Nectar.Widget.LoginPage login_page;
 	[GtkChild]
-	private Nectar.Widget.MainPage main_page;
+	public Nectar.Widget.MainPage main_page;
 
 	public AppWindow () {
 		var hints = Gdk.Geometry();

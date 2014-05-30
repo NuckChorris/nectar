@@ -1,11 +1,11 @@
 [GtkTemplate (ui = "/com/plejeck/nectar/MainPage.ui")]
 class Nectar.Widget.MainPage : Gtk.Box {
 	[GtkChild]
-	private Nectar.Widget.NowPlaying nowplaying;
+	public Nectar.Widget.NowPlaying nowplaying;
 	[GtkChild]
-	private Gtk.ScrolledWindow grid;
+	public Gtk.ScrolledWindow grid;
 	[GtkChild]
-	private Nectar.Widget.PrefsBar prefsbar;
+	public Nectar.Widget.PrefsBar prefsbar;
 	public MainPage () {
 		var series = Nectar.Model.AnimeSeries();
 		series.title = "Puella Magi Madoka Magica";
