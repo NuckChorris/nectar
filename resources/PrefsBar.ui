@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
 	<!-- interface-requires gtk+ 3.10 -->
+	<menu id="prefs_menu">
+		<section>
+			<item>
+				<attribute name="label" translatable="yes">About Nectar</attribute>
+			</item>
+			<item>
+				<attribute name="label" translatable="yes">Help with Nectar</attribute>
+			</item>
+		</section>
+		<section>
+			<item>
+				<attribute name="label" translatable="yes">Log out</attribute>
+			</item>
+		</section>
+		<section>
+			<item>
+				<attribute name="label" translatable="yes">Report Bug</attribute>
+			</item>
+			<item>
+				<attribute name="label" translatable="yes">Request Feature</attribute>
+			</item>
+			<item>
+				<attribute name="label" translatable="yes">Give Feedback</attribute>
+			</item>
+		</section>
+	</menu>
 	<template class="NectarWidgetPrefsBar" parent="GtkBox">
 		<property name="orientation">horizontal</property>
 		<property name="spacing">0</property>
@@ -32,6 +58,7 @@
 		<child>
 			<object class="GtkMenuButton" id="prefs_btn">
 				<property name="label">Prefs</property>
+				<property name="menu-model">prefs_menu</property>
 			</object>
 			<packing>
 				<property name="pack-type">end</property>
