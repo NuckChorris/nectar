@@ -1,4 +1,4 @@
-public interface Nectar.Backend.Backend {
+public interface Nectar.Backend.Backend : Object {
 	// Public stuff
 	public abstract async Nectar.Model.User? get_user (string username) throws Error;
 //	public abstract async Nectar.Model.AnimeSeries? get_anime (string id) throws Error;

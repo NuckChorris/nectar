@@ -1,11 +1,11 @@
 class Nectar.Controller.LoginPage : Object {
 	public Nectar.Util.Settings settings;
 	public Nectar.Util.Session session;
-	public Nectar.Backend.Hummingbird backend;
+	public Nectar.Backend.Backend backend;
 	public Nectar.Widget.LoginPage login_page;
 	public Gtk.Stack stack;
 
-	public LoginPage (Nectar.Util.Settings settings, Nectar.Util.Session session, Nectar.Backend.Hummingbird backend) {
+	public LoginPage (Nectar.Util.Settings settings, Nectar.Util.Session session, Nectar.Backend.Backend backend) {
 		this.settings = settings;
 		this.session = session;
 		this.backend = backend;
