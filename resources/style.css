@@ -1,34 +1,46 @@
-NectarWidgetAppWindow {
-	background-color: #2f343b;
+@define-color bg-color #2F343B;
+@define-color inset-color #D8DFE7;
+@define-color outset-color #272C33;
+
+GtkWindow {
+	background-color: @bg-color;
 }
-NectarWidgetLoginPage GtkEntry,
-NectarWidgetLoginPage GtkButton {
+GtkEntry,
+GtkButton {
 	font-size: 1.3em;
 	border-radius: 2px;
 	border: none;
 	padding: 5px;
 }
-NectarWidgetLoginPage GtkEntry {
-	background-color: #d8dfe7;
-	color: #2f343b;
+GtkEntry {
+	background-color: @inset-color;
+	color: @bg-color;
 }
-/* Sensitive Button */
-NectarWidgetLoginPage GtkButton {
-	background-color: #272c33;
-	transition: .3s background-color;
+/* Button Default */
+GtkButton {
+	background-color: @outset-color;
+	transition: .2s background-color;
 }
-NectarWidgetLoginPage GtkButton GtkLabel {
+GtkButton GtkLabel {
 	background-color: transparent;
-	color: #d8dfe7;
+	color: @inset-color;
 }
-/* Insensitive Button */
-NectarWidgetLoginPage GtkButton:insensitive {
-	background-color: #2c323c;
+/* Button Hover */
+GtkButton:selected {
+	background-color: lighter(@outset-color);
 }
-NectarWidgetLoginPage GtkButton:insensitive GtkLabel {
+/* Button Disabled */
+GtkButton:insensitive {
+	background-color: alpha(@outset-color, 0.35);
+}
+GtkButton:insensitive GtkLabel {
 	color: #818e9e;
 }
 /* Label at bottom */
 NectarWidgetLoginPage GtkBox > GtkLabel {
 	color: #b8bfc7;
+}
+NectarWidgetPrefsBar GtkButton {
+	margin: 3px;
+	padding: 0;
 }
