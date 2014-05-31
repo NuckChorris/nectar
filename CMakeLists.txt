@@ -79,13 +79,13 @@ VALA_C nectar
 	src/Util/FileCache.vala
 	src/Util/Logger.vala
 	src/Util/Settings.vala
-	src/Widgets/PrefsMenu.vala
 	src/Widgets/PrefsBar.vala
 	src/Widgets/Image.vala
 	src/Widgets/NowPlaying.vala
 	src/Widgets/MainPage.vala
 	src/Widgets/LoginPage.vala
 	src/Widgets/AppWindow.vala
+	src/Controllers/LoginPage.vala
 	src/nectar.vala
 PACKAGES
 	gtk+-3.0

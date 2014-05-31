@@ -38,10 +38,11 @@ class Nectar.Controller.LoginPage : Object {
 			login_page.loading_text("Logging in...");
 			backend.authenticate.begin(login_page.username, login_page.password, (obj, res) => {
 				string? auth = backend.authenticate.end(res);
-				login_page.loading_text(null);
 				if (auth == null) {
+					login_page.loading_text(null);
 					login_page.show_error("Bad username or password");
 				}
+				stack.visible_child_name = "main-page";
 				stderr.printf("%s\n", auth);
 			});
 		});

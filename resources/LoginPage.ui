@@ -32,6 +32,12 @@
 							</packing>
 						</child>
 						<child>
+							<object class="GtkLabel" id="login_error" />
+							<packing>
+								<property name="name">error</property>
+							</packing>
+						</child>
+						<child>
 							<object class="NectarWidgetImage" id="avatar">
 								<property name="max_height">100</property>
 								<property name="max_width">100</property>
@@ -92,7 +98,7 @@
 					</object>
 				</child>
 				<child>
-					<object class="GtkLabel" id="loading_text">
+					<object class="GtkLabel" id="loading_label">
 						<property name="label" translatable="yes">Loading...</property>
 					</object>
 				</child>

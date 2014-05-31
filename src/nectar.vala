@@ -22,6 +22,7 @@ class Nectar.Application : Gtk.Application {
 		/*** LOGIN CONTROLLER ***/
 		var login_controller = new Nectar.Controller.LoginPage(settings, session, backend);
 		login_controller.login_page = window.login_page;
+		login_controller.stack = window.stack;
 		login_controller.attach();
 
 		/*** PREFSBAR CONTROLLER ***/

@@ -19,17 +19,23 @@ public class Nectar.Widget.LoginPage : Gtk.Stack {
 	[GtkChild]
 	private Gtk.Stack logo_stack;
 	[GtkChild]
+	private Gtk.Label loading_label;
+	[GtkChild]
+	private Gtk.Label login_error;
+	[GtkChild]
 	private Nectar.Widget.Image avatar;
 
 	public void loading_text (string? text) {
-		if (text == null)
-			stderr.printf("Stopped loading\n");
-		stderr.printf("Loading: %s\n", text);
+		if (text == null) {
+			visible_child_name = "login-page";
+		} else {
+			loading_label.label = text ?? "Reticulating Splines";
+			visible_child_name = "loading-page";
+		}
 	}
 	public void show_error (string? text) {
-		if (text == null)
-			stderr.printf("Login Error: Unknown\n");
-		stderr.printf("Login Error: %s\n", text);
+		login_error.label = text ?? "Unknown Error";
+		logo_stack.visible_child_name = "error";
 	}
 	public void show_throbber () {
 		logo_stack.visible_child_name = "throbber";
