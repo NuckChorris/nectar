@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<!-- interface-requires gtk+ 3.10 -->
+	<template class="NectarWidgetQuickUpdateTile" parent="GtkOverlay">
+		<child>
+			<object class="NectarWidgetImage" id="poster_graphic" />
+		</child>
+		<child type="overlay">
+			<object class="GtkBox" id="overlay_box">
+				<property class="visible">false</property>
+				<property name="orientation">vertical</property>
+				<child>
+					<object class="GtkLabel" id="title_label">
+						<property name="vexpand">true</property>
+					</object>
+				</child>
+				<child>
+					<object class="GtkButton" id="increment_button">
+						<property name="vexpand">false</property>
+					</object>
+				</child>
+				<child>
+					<object class="GtkLabel" id="info_label">
+						<property name="vexpand">true</property>
+						<property name="label" translatable="true">More Info &raquo;</property>
+					</object>
+				</child>
+			</object>
+		</child>
+	</template>
+</interface>

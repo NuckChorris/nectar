@@ -7,6 +7,7 @@
 		<file>MainPage.ui</file>
 		<file>NowPlaying.ui</file>
 		<file>PrefsBar.ui</file>
+		<file>QuickUpdateTile.ui</file>
 		<file>AppWindow.ui</file>
 	</gresource>
 </gresources>
