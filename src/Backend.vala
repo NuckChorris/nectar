@@ -3,7 +3,7 @@ public interface Nectar.Backend.Backend : Object {
 	public abstract async Nectar.Model.User? get_user (string username) throws Error;
 //	public abstract async Nectar.Model.AnimeSeries? get_anime (string id) throws Error;
 //	public abstract async Nectar.Model.AnimeSeries[] search_anime (string query) throws Error;
-//	public abstract async Nectar.Model.AnimeStatus[] get_anime_list (string query) throws Error;
+//	public abstract async Nectar.Model.AnimeList? get_library (string user) throws Error;
 	// Authenticated stuff
 	public abstract async string? authenticate (string username, string password) throws Error;
 //	public abstract async bool update_anime_status (string anime_id, string status, string auth) throws Error;

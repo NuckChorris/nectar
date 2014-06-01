@@ -73,6 +73,7 @@ VALA_C nectar
 	src/config.vala
 	src/Models/AnimeSeries.vala
 	src/Models/AnimeStatus.vala
+	src/Models/AnimeList.vala
 	src/Models/User.vala
 	src/Backend.vala
 	src/Backends/Hummingbird.vala
